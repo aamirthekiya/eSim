@@ -64,7 +64,7 @@ class Appconfig(QtGui.QWidget):
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
     except BaseException:
-        print("Cannot access eSim in parser")
+        print("Can not accessed modelica json file in .esim folder")
 
     try:
         project_explorer = json.load(open(dictPath))

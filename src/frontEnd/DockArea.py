@@ -181,8 +181,13 @@ class DockArea(QtGui.QMainWindow):
         dock['Model Editor-' + str(count)].raise_()
 
         temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Model Editor-' + str(count)])
+        try:    
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['Model Editor-' + str(count)])
+        except KeyError:
+            print("Project is not selected for this function ---(def modelEditor)")
+        except Exception as e:
+            print(e)
         count = count + 1
 
     def kicadToNgspiceEditor(self, clarg1, clarg2=None):
@@ -247,8 +252,14 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-' + str(count)].raise_()
 
         temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Subcircuit-' + str(count)])
+        try:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['Subcircuit-' + str(count)])
+        except KeyError:
+            print("Project is not selected for this function ---(def subcircuiteditor)")
+        except Exception as e:
+            print(e)
+
         count = count + 1
 
     def usermanual(self):
