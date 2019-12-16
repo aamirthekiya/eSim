@@ -88,7 +88,6 @@ Section "Ngspice circuit simulator" SecDummy
 ;ADD YOUR OWN FILES HERE...
 ZipDLL::extractall "$EXEDIR\spice.zip" "C:\"
 ZipDLL::extractall "$EXEDIR\eSim.zip" "$INSTDIR\"
-
 ;Copying Folder to install directory
 SetOutPath "$INSTDIR\eSim"
 ;File /nonfatal /a /r "eSim\"
@@ -113,6 +112,19 @@ CopyFiles "$PROFILE\AppData\Roaming\kicad\fp-lib-table" "$PROFILE\AppData\Roamin
 CopyFiles "$PROFILE\AppData\Roaming\kicad\fp-lib-table-online" "$PROFILE\AppData\Roaming\kicad\fp-lib-table-online-backup"
 CopyFiles "$EXEDIR\dependencies\OfflineFiles\fp-lib-table" "$PROFILE\AppData\Roaming\kicad\"
 CopyFiles "$EXEDIR\dependencies\OfflineFiles\fp-lib-table-online" "$PROFILE\AppData\Roaming\kicad\"
+
+CreateDirectory $PROFILE\.esim
+FileOpen $0  "$PROFILE\.esim\config.ini" w
+FileWrite $0 `[eSim]$\n`
+FileWrite $0 `eSim_HOME = $INSTDIR\eSim$\n`
+FileWrite $0 `LICENSE = %(eSim_HOME)s/LICENSE$\n`
+FileWrite $0 `KicadLib = %(eSim_HOME)s/kicadSchematicLibrary$\n`
+FileWrite $0 `IMAGES = %(eSim_HOME)s/images$\n`
+FileWrite $0 `VERSION = %(eSim_HOME)s/VERSION$\n`
+FileWrite $0 `MODELICA_MAP_JSON = %(eSim_HOME)s/src/ngspicetoModelica/Mapping.json$\n`
+FileClose $0
+CopyFiles "$INSTDIR\eSim\images\logo.png" "$PROFILE\.esim"
+
 SectionEnd
 
 Section -Prerequisites
