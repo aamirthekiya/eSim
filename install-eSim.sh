@@ -56,7 +56,7 @@ function installNghdl
     ./install-nghdl.sh --install
         
     if [ $? -ne 0 ];then
-    	echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
+    	echo -e "\n\nNghdl ERROR: Error while installing nghdl\n\n"
         exit 0
     else
         ngspiceFlag=1
@@ -83,6 +83,10 @@ function addKicadPPA
         echo "Adding kicad-4 PPA to install latest ghdl version"
         sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
         sudo apt-get update
+        if [ $? -ne 0 ]; then
+            echo  -e "\n\n\nThe APT repository couldn't be update.\nKindly resolve above APT repository errors and try again."
+            exit 1
+        fi
     else
         echo "Kicad-4 is available in synaptic"
     fi
@@ -93,11 +97,22 @@ function installDependency
 
     echo "Installing Kicad............"
     sudo apt-get install -y kicad
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\n Kicad couldn't be install.\nKindly resolve above APT repository errors and try again."
+        exit 1
+    fi
     echo "Installing PyQt4............"
     sudo apt-get install -y python-qt4
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\nPyQt-4 dependency couldn't be install.\nKindly resolve above APT repository errors and try again."
+        exit 1
+    fi
     echo "Installing Matplotlib......."
     sudo apt-get install -y python-matplotlib
-
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\nMatplotlib dependency couldn't be install.\nKindly resolve above APT repository errorss and try again."
+        exit 1
+    fi
 }
 
 function copyKicadLibrary
