@@ -52,7 +52,7 @@ class Analysis(QtGui.QWidget):
         """
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        
+
         self.grid.addWidget(self.createCheckBox(),0,0,QtCore.Qt.AlignTop)
         self.grid.addWidget(self.createACgroup(),1,0,5,0)
         self.grid.addWidget(self.createDCgroup(),1,0,5,0)
@@ -76,6 +76,10 @@ class Analysis(QtGui.QWidget):
                 self.acbox.setDisabled(False)
                 self.dcbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.acbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "AC"
                 if contentlist[1] == 'lin':
                     self.Lin.setChecked(True)
@@ -92,6 +96,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
             elif contentlist[0] == '.tran':
@@ -99,6 +107,10 @@ class Analysis(QtGui.QWidget):
                 self.trbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.dcbox.setDisabled(True)
+
+                self.trbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.acbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
             elif contentlist[0] == '.op':
@@ -106,6 +118,11 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+                self.check.setChecked(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.check.setChecked(True)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
@@ -152,18 +169,30 @@ class Analysis(QtGui.QWidget):
             self.acbox.setDisabled(False)
             self.dcbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.acbox.setVisible(True)
+            self.dcbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "AC"
 
         elif self.checkDC.isChecked():
             self.dcbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.dcbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
         elif self.checkTRAN.isChecked():
             self.trbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.dcbox.setDisabled(True)
+
+            self.trbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.dcbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
     def createACgroup(self):
