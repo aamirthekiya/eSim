@@ -51,10 +51,12 @@ class Analysis(QtGui.QWidget):
         - Accordingly set state for track widget options, as `TRAN`, `AC` ...
         """
         self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.createCheckBox(), 0, 0)
-        self.grid.addWidget(self.createACgroup(), 1, 0)
-        self.grid.addWidget(self.createDCgroup(), 2, 0)
-        self.grid.addWidget(self.createTRANgroup(), 3, 0)
+        self.setLayout(self.grid)
+        
+        self.grid.addWidget(self.createCheckBox(),0,0,QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createACgroup(),1,0,5,0)
+        self.grid.addWidget(self.createDCgroup(),1,0,5,0)
+        self.grid.addWidget(self.createTRANgroup(),1,0,5,0)
 
         try:
             kicadFile = self.clarg1
@@ -111,7 +113,6 @@ class Analysis(QtGui.QWidget):
             self.checkTRAN.setChecked(True)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
-        self.setLayout(self.grid)
         self.show()
 
     def createCheckBox(self):
