@@ -224,6 +224,7 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
+        self.acbox.setVisible(False)  
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup = QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
@@ -418,6 +419,7 @@ class Analysis(QtGui.QWidget):
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcbox.setDisabled(True)
+        self.dcbox.setVisible(False)
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
 
