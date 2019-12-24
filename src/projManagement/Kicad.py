@@ -42,6 +42,21 @@ class Kicad:
         self.obj_appconfig = Appconfig()
         self.obj_dockarea = dockarea
 
+    def check_open_schematic(self):
+        """
+        This function checks if any of the project's schematic is open or not
+        """
+        if self.obj_workThread:
+            procList = self.obj_workThread.get_proc_threads()[:]
+            if procList:
+                for proc in procList:
+                    if proc.poll() is None:
+                        return True
+                    else:
+                        self.obj_workThread.get_proc_threads().remove(proc)
+
+        return False
+
     def openSchematic(self):
         """
         This function create command to open Kicad schematic after
