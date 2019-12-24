@@ -54,6 +54,9 @@ class WorkerThread(QtCore.QThread):
         """
         self.wait()
 
+    def get_proc_threads(self):
+        return self.my_workers
+
     def run(self):
         """
         run is the function that is called, when we start the thread as
