@@ -1,5 +1,5 @@
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui,QtCore
 from . import TrackWidget
 import os
 # from xml.etree import ElementTree as ET
