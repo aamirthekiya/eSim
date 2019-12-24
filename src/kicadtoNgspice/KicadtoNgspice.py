@@ -70,22 +70,22 @@ class MainWindow(QtGui.QWidget):
 
         # Read the netlist, ie the .cir file
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
-        print("=============================================================")
-        print("Given Kicad Schematic Netlist Info :", kicadNetlist)
+        # print("=============================================================")
+        # print("Given Kicad Schematic Netlist Info :", kicadNetlist)
 
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
 
         # Replace parameter with values
         netlist, infoline = obj_proc.preprocessNetlist(kicadNetlist, param)
-        print("=============================================================")
-        print("Schematic Info after processing Kicad Netlist: ", netlist)
+        # print("=============================================================")
+        # print("Schematic Info after processing Kicad Netlist: ", netlist)
         # print "INFOLINE",infoline
 
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-        print("=============================================================")
-        print("OPTIONINFO in the Netlist", optionInfo)
+        # print("=============================================================")
+        # print("OPTIONINFO in the Netlist", optionInfo)
 
         # List for storing source and its value
         global sourcelist, sourcelisttrack
@@ -111,8 +111,8 @@ class MainWindow(QtGui.QWidget):
         ) = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText
         )
-        print("=======================================")
-        print("Model available in the Schematic :", modelList)
+        # print("=======================================")
+        # print("Model available in the Schematic :", modelList)
 
         """
         - Checking if any unknown model is used in schematic which is not
@@ -653,7 +653,7 @@ class MainWindow(QtGui.QWidget):
                  Please check it")
                 sys.exit()
         else:
-            print("========================================================")
+            # print("========================================================")
             print(analysisFileLoc + " does not exist")
             sys.exit()
 
@@ -743,7 +743,7 @@ class MainWindow(QtGui.QWidget):
             except BaseException:
                 print("Error in opening .cir.out file.")
         else:
-            print("=========================================================")
+            # print("=========================================================")
             print(
                 self.projName +
                 ".cir.out does not exist. Please create a spice netlist.")
@@ -803,5 +803,5 @@ class MainWindow(QtGui.QWidget):
         out.writelines('\n')
 
         out.writelines('.ends ' + self.projName)
-        print("=============================================================")
+        # print("=============================================================")
         print("The subcircuit has been written in " + self.projName + ".sub")

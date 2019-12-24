@@ -45,10 +45,10 @@ class Source(QtGui.QWidget):
         - Each line in sourcelist corresponds to a source
         - According to the source type modify the source and add it to the tab
         """
-        print("============================================================")
+        """print("============================================================")
         print("SOURCE LIST TRACK", sourcelisttrack)
         print("SOURCE LIST", sourcelist)
-        print("============================================================")
+        print("============================================================")"""
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -372,7 +372,7 @@ class Source(QtGui.QWidget):
         else:
             print("No source is present in your circuit")
 
-        print("============================================================")
+        # print("============================================================")
         # This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var
