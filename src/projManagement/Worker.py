@@ -39,6 +39,7 @@ class WorkerThread(QtCore.QThread):
     def __init__(self, args):
         QtCore.QThread.__init__(self)
         self.args = args
+        self.my_workers = []
 
     def __del__(self):
         """
