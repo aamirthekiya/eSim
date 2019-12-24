@@ -56,9 +56,6 @@ class OpenProjectInfo(QtGui.QWidget):
 
             for dirs, subdirs, filelist in os.walk(
                     self.obj_Appconfig.current_project["ProjectName"]):
-                # directory = dirs
-                # files = filelist
-                # above 'directory' and 'files' variable never used
                 pass
             self.obj_Appconfig.project_explorer[dirs] = filelist
             json.dump(
