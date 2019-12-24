@@ -83,10 +83,10 @@ class WorkerThread(QtCore.QThread):
                         comamnds to be executed in different child processes
                         (see subproces.Popen())
         """
-        self.my_workers.append(proc)
 
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())
+        self.my_workers.append(proc)
         procThread.procThread_list.append(proc)
         procThread.proc_dict[procThread.current_project['ProjectName']].append(
             proc.pid)
