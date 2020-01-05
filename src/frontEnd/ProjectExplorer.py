@@ -327,7 +327,7 @@ class ProjectExplorer(QtGui.QWidget):
                     msg.showMessage(
                         'The project "'
                         + newBaseFileName
-                        + '" already exist.Please select the different name or'
+                        + '" already exist. Please select the different name or'
                         + ' delete existing project')
                     msg.setWindowTitle("Error Message")
 
@@ -336,6 +336,6 @@ class ProjectExplorer(QtGui.QWidget):
                     print("===========================")
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
-                        'The project name should not'
+                        'The project name should not '
                         + 'contain space between them')
                     msg.setWindowTitle("Error Message")

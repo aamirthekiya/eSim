@@ -89,10 +89,10 @@ class Kicad:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
                 'Please select the project first. You can either create'
-                + 'new project or open existing project')
+                + ' new project or open existing project')
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either create'
-                + 'new project or open existing project')
+                + ' new project or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     '''
@@ -202,18 +202,18 @@ class Kicad:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage(
                     'The project does not contain any Kicad netlist file for'
-                    + 'conversion.')
+                    + ' conversion.')
                 self.obj_appconfig.print_error(
                     'The project does not contain any Kicad netlist file for'
-                    + 'conversion.')
+                    + ' conversion.')
                 self.msg.setWindowTitle("Error Message")
 
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
                 'Please select the project first. You can either create'
-                + 'new project or open existing project')
+                + ' new project or open existing project')
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either create'
-                + 'new project or open existing project')
+                + ' new project or open existing project')
             self.msg.setWindowTitle("Error Message")

@@ -57,8 +57,8 @@ class NewSub(QtGui.QWidget):
                 # print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage(
-                    'Unable to create subcircuit. Please make sure\
-                     you have write permission on ' +
+                    'Unable to create subcircuit. Please make sure'
+                     ' you have write permission on ' +
                     self.schematic_path)
                 self.msg.setWindowTitle("Error Message")
 

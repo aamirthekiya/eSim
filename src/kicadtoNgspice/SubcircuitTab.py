@@ -166,8 +166,8 @@ class SubcircuitTab(QtGui.QWidget):
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                "Please select a valid Subcircuit directory \
-                (Containing '.sub' file).")
+                "Please select a valid Subcircuit directory "
+                "(Containing '.sub' file).")
             self.msg.setWindowTitle("Error Message")
             self.msg.show()
 
@@ -200,7 +200,7 @@ class SubcircuitTab(QtGui.QWidget):
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                "Please select a valid Subcircuit directory \
-                (Containing '.sub' file).")
+                "Please select a valid Subcircuit directory "
+                "(Containing '.sub' file).")
             self.msg.setWindowTitle("Error Message")
             self.msg.show()

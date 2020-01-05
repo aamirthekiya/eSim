@@ -42,9 +42,9 @@ class Appconfig(QtGui.QWidget):
     # Current Subcircuit detail
     current_subcircuit = {"SubcircuitName": None}
     # Workspace detail
-    workspace_text = '''eSim stores your project in a folder called a \
-    eSim-Workspace. You can choose a different workspace folder to use\
-     for this session.'''
+    workspace_text = "eSim stores your project in a folder called "
+    workspace_text += "a eSim-Workspace. You can choose a different"
+    workspace_text += " workspace folder to use for this session."
     procThread_list = []
     proc_dict = {}
     # holds the pids of all external windows corresponds to the current project
