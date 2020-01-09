@@ -63,9 +63,24 @@ class Appconfig(QtGui.QWidget):
     # Try catch added, since eSim cannot be accessed under parser for Win10
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
-    except BaseException:
+    except BaseException as e:
+        print("===============================================")
         print("Cannot access Modelica's JSON file --- .esim folder")
-
+        print(str(e))
+        print("===============================================")
+        
+    #Opening file and reading kicad folder path
+    try:
+        path_file = open('../.OfflineFiles/kicad_folder_path.txt' , 'r')
+        kicad_path = path_file.read().rstrip()
+        path_file.close()
+    except BaseException as e:
+        kicad_path = None
+        print("===============================================")
+        print("Cannot access kicad path file --- .OfflineFiles")
+        print(str(e))
+        print("===============================================")
+    
     try:
         project_explorer = json.load(open(dictPath))
     except BaseException:

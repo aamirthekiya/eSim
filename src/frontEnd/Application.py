@@ -30,6 +30,7 @@ import time
 from PyQt4.Qt import QSize
 import sys
 import os
+import shutil
 
 
 # Its our main window of application.
@@ -43,6 +44,7 @@ class Application(QtGui.QMainWindow):
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
+        self.online_flag = False
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
@@ -70,7 +72,6 @@ class Application(QtGui.QMainWindow):
         """
         In this function we are setting icons, short-cuts,and
         defining functonality for:
-
             - Top-tool-bar (New project, Open project, Close project,\
                 Help option )
             - Left-tool-bar (Open Schematic, Convert KiCad to NgSpice,\
@@ -111,6 +112,12 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.openproj)
 
         self.topToolbar.addAction(self.closeproj)
+    
+        self.check_for_online_offline_files()
+        self.topToolbar.addAction(self.webConnect)
+        self.webConnect.setShortcut('Ctrl+G')
+        self.webConnect.triggered.connect(self.go_online_offline)
+
         self.topToolbar.addAction(self.helpfile)
 
         # This part is setting fossee logo to the right
@@ -200,17 +207,14 @@ class Application(QtGui.QMainWindow):
         '''
         When exit button is pressed a Message box pops out with
         exit message and buttons 'Yes', 'No'.
-
             1. If 'Yes' is pressed:
                 - it checks that program(process) in procThread_list\
                     (list made in Appconfig.py):
-
                     - if available it terminates that program
                     - if the program(process) is not available,\
                         it checks for it
                       in process_obj (list made in Appconfig.py) if found it
                       closes the program.
-
             2. If 'No' is pressed:
                 - the program just continues as it was doing earlier.
         '''
@@ -250,12 +254,10 @@ class Application(QtGui.QMainWindow):
     def close_project(self):
         """
         This function first checks whether project(file) is present in list.
-
             - If present:
                 - it first kills that process-id.
                 - closes that file.
                 - Shows message "Current project <path of file> is closed"
-
             - If not present: pass
         """
         print("Function : Close Project")
@@ -324,6 +326,97 @@ class Application(QtGui.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
+    """This function is used for checking fp-lib-tables file
+     is present.if not than copy from .OfflineFiles folder."""
+    def check_for_online_offline_files(self):
+
+        if self.obj_appconfig.kicad_path != None:
+            #-----------------------------------------------------
+            #fp-lib-table is not there than copy from .OfflineFolder
+            if not os.path.exists(
+                self.obj_appconfig.kicad_path + "/fp-lib-table"):
+                shutil.copy('../.OfflineFiles/fp-lib-table' ,
+                    self.obj_appconfig.kicad_path + "/")
+            #-----------------------------------------------------
+            """checking online and offline both file's are avaliable.
+            if yes than remove offline file."""
+            if os.path.exists(self.obj_appconfig.kicad_path +
+                     "/fp-lib-table-offline") and os.path.exists(
+                self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-online"):
+                     os.remove(self.obj_appconfig.kicad_path +
+                        "/fp-lib-table-offline")
+            #-----------------------------------------------------
+            #This ladder is used for checking which file is present.
+            if os.path.exists(self.obj_appconfig.kicad_path +
+                     "/fp-lib-table-offline"):
+                self.webConnect = QtGui.QAction(
+                    QtGui.QIcon('../../images/online.png'),
+                    '<b>Go Offline</b>',self)
+                self.online_flag = True
+
+            elif os.path.exists(self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-online"):
+                self.webConnect = QtGui.QAction(
+                    QtGui.QIcon('../../images/offline.png'),
+                    '<b>Go Online</b>',self)
+                self.online_flag = False
+            else:
+                #if online and offline is not avaliable
+                shutil.copy('../.OfflineFiles/fp-lib-table-online' ,
+                        self.obj_appconfig.kicad_path + "/")
+                if os.path.exists(self.obj_appconfig.kicad_path +
+                        "/fp-lib-table-online"):
+                    self.webConnect = QtGui.QAction(
+                        QtGui.QIcon('../../images/offline.png'),
+                        '<b>Go Online</b>',self)
+                    self.online_flag = False
+            #----------------------------------------------------
+        else:
+            #if path is not found
+            self.webConnect = QtGui.QAction(QtGui.QIcon(
+                '../../images/disable.png'),
+                    '<b>Clickme</b>',self)
+
+    #This function is used for switching between online mode and offline mode  
+    def go_online_offline(self):
+        if self.obj_appconfig.kicad_path != None:
+            try:
+                if not self.obj_kicad.check_open_schematic():
+                    if self.online_flag:
+                        os.rename(
+                            self.obj_appconfig.kicad_path + "/fp-lib-table",
+                            self.obj_appconfig.kicad_path + "/fp-lib-table-online")
+                        os.rename(
+                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline",
+                            self.obj_appconfig.kicad_path + "/fp-lib-table")
+                        self.webConnect.setIcon(QtGui.QIcon('../../images/offline.png'))
+                        self.webConnect.setText('<b>Go Online</b>')
+                        self.online_flag = False
+                    else:
+                        os.rename(
+                            self.obj_appconfig.kicad_path + "/fp-lib-table",
+                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline")
+                        os.rename(
+                            self.obj_appconfig.kicad_path + "/fp-lib-table-online",
+                            self.obj_appconfig.kicad_path + "/fp-lib-table")
+                        self.webConnect.setIcon(QtGui.QIcon('../../images/online.png'))
+                        self.webConnect.setText('<b>Go Offline</b>')
+                        self.online_flag = True
+                else:
+                    self.msg = QtGui.QErrorMessage()
+                    self.msg.showMessage('Please save and close all the Kicad'
+                        'Windows first, and then change the online-offline mode')
+                    self.msg.setWindowTitle("Error Message")
+            except:
+                self.check_for_online_offline_files()
+        else:
+            self.info_msg = QtGui.QMessageBox.critical(self,
+                            'Message',
+                            "Please make sure kicad_folder_file is " +
+                            "present in .OfflineFiles folder.")
+
+
     # This Function execute ngspice on current project.
     def open_ngspice(self):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
@@ -373,7 +466,6 @@ class Application(QtGui.QMainWindow):
         """
         When 'subcircuit' icon is clicked wich is present in
         left-tool-bar of main page:
-
             - Meassge shown on screen "Subcircuit editor is called".
             - 'subcircuiteditor()' function is called using object
               'obj_dockarea' of class 'Mainview'.
@@ -387,7 +479,6 @@ class Application(QtGui.QMainWindow):
         """
         This function uses validateTool() method from
         Validation.py:
-
             - If 'nghdl' is present in executables list then
               it adds passes command 'nghdl -e' to WorkerThread class of
               Worker.py.
@@ -414,7 +505,6 @@ class Application(QtGui.QMainWindow):
         """
         When model editor icon is clicked which is present in
         left-tool-bar of main page:
-
             - Meassge shown on screen "Model editor is called".
             - 'modeleditor()' function is called using object
               'obj_dockarea' of class 'Mainview'.
@@ -445,8 +535,6 @@ class Application(QtGui.QMainWindow):
                             +self.ngspiceNetlist
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
-
-
                     if self.obj_validation.validateTool("OMEdit"):
                         # Creating command to run OMEdit
                         self.cmd2 = "OMEdit "+self.modelicaNetlist
@@ -471,7 +559,6 @@ class Application(QtGui.QMainWindow):
                         self.msg.setWindowTitle("Missing OpenModelica")
                         self.obj_appconfig.print_info(self.msgContent)
                         self.msg.exec_()
-
                 except Exception as e:
                     self.msg = QtGui.QErrorMessage()
                     self.msg.showMessage(
@@ -503,7 +590,6 @@ class Application(QtGui.QMainWindow):
         """
         This function uses validateTool() method from
         Validation.py:
-
             - If 'OMOptim' is present in executables list then
               it adds passes command 'OMOptim' to WorkerThread class of
               Worker.py.
@@ -543,16 +629,12 @@ class Application(QtGui.QMainWindow):
 class MainView(QtGui.QWidget):
     """
     This class defines whole view and style of main page:
-
         - Position of tool bars:
-
          - Top tool bar.
          - Left tool bar.
-
         - Project explorer Area.
         - Dock area.
         - Console area.
-
     """
 
     def __init__(self, *args):

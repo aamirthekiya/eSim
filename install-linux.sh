@@ -124,7 +124,8 @@ function installDependency
 
 function copyKicadLibrary
 {
-
+    #making file for kicad folder
+    echo "$HOME/.config/kicad" >> $eSim_Home/src/.OfflineFiles/kicad_folder_path.txt
     # Copy Kicad library made for eSim
     sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
     sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
@@ -246,7 +247,6 @@ if [ $option == "--install" ];then
             installDependency
             copyKicadLibrary
             createDesktopStartScript
-
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
@@ -273,6 +273,8 @@ elif [ $option == "--uninstall" ];then
     echo -n "Are you sure ? As it will remove complete eSim including your subcircuit and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
+        rm -f $eSim_Home/src/.OfflineFiles/kicad_folder_path.txt
+        rm -rf $HOME/.config/kicad
         sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
         if [ $? -eq 0 ];then
             echo "Uninstalled successfully"

@@ -41,6 +41,7 @@ class Kicad:
         self.obj_validation = Validation.Validation()
         self.obj_appconfig = Appconfig()
         self.obj_dockarea = dockarea
+        self.obj_workThread = Worker.WorkerThread(None)
 
     def check_open_schematic(self):
         """
