@@ -46,6 +46,12 @@ class Kicad:
     def check_open_schematic(self):
         """
         This function checks if any of the project's schematic is open or not
+
+        @params
+
+        @return
+            True        => If the project's schematic is not open
+            False       => If the project's schematic is open
         """
         if self.obj_workThread:
             procList = self.obj_workThread.get_proc_threads()[:]
@@ -89,11 +95,11 @@ class Kicad:
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
-                'Please select the project first. You can either create'
-                + ' new project or open existing project')
+                'Please select the project first. You can either ' +
+                'create new project or open existing project')
             self.obj_appconfig.print_warning(
-                'Please select the project first. You can either create'
-                + ' new project or open existing project')
+                'Please select the project first. You can either ' +
+                'create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     '''
@@ -202,19 +208,19 @@ class Kicad:
             else:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage(
-                    'The project does not contain any Kicad netlist file for'
-                    + ' conversion.')
+                    'The project does not contain any Kicad netlist file' +
+                    ' for conversion.')
                 self.obj_appconfig.print_error(
-                    'The project does not contain any Kicad netlist file for'
-                    + ' conversion.')
+                    'The project does not contain any Kicad netlist file' +
+                    ' conversion.')
                 self.msg.setWindowTitle("Error Message")
 
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
-                'Please select the project first. You can either create'
-                + ' new project or open existing project')
+                'Please select the project first. You can either ' +
+                'create new project or open existing project')
             self.obj_appconfig.print_warning(
-                'Please select the project first. You can either create'
-                + ' new project or open existing project')
+                'Please select the project first. You can either ' +
+                'create new project or open existing project')
             self.msg.setWindowTitle("Error Message")

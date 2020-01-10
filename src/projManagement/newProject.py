@@ -87,9 +87,8 @@ class NewProjectInfo(QtGui.QWidget):
                 # print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage(
-                    'Unable to create project. Please make sure you have'
-                    + ' write permission on '
-                    + self.workspace)
+                    'Unable to create project. Please make sure you have' +
+                    ' write permission on ' + self.workspace)
                 self.msg.setWindowTitle("Error Message")
             f.write("schematicFile " + self.projName + ".sch\n")
             f.close()
@@ -115,10 +114,10 @@ class NewProjectInfo(QtGui.QWidget):
             # print "Project already exist"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                'The project "'
-                + self.projName
-                + '" already exist.Please select the different name or delete'
-                + ' existing project')
+                'The project "' +
+                self.projName +
+                '" already exist.Please select the different name or delete' +
+                ' existing project')
             self.msg.setWindowTitle("Error Message")
 
         elif self.reply == "CHECKNAME":

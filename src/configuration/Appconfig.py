@@ -68,10 +68,10 @@ class Appconfig(QtGui.QWidget):
         print("Cannot access Modelica's JSON file --- .esim folder")
         print(str(e))
         print("===============================================")
-        
-    #Opening file and reading kicad folder path
+
+    # Opening file and reading kicad folder path
     try:
-        path_file = open('../.OfflineFiles/kicad_folder_path.txt' , 'r')
+        path_file = open('../.OfflineFiles/kicad_folder_path.txt', 'r')
         kicad_path = path_file.read().rstrip()
         path_file.close()
     except BaseException as e:
@@ -80,7 +80,7 @@ class Appconfig(QtGui.QWidget):
         print("Cannot access kicad path file --- .OfflineFiles")
         print(str(e))
         print("===============================================")
-    
+
     try:
         project_explorer = json.load(open(dictPath))
     except BaseException:

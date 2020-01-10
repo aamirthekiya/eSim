@@ -286,8 +286,8 @@ class ProjectExplorer(QtGui.QWidget):
                     # rename project folder
                     updatedProjectPath = newBaseFileName.join(
                         projectPath.rsplit(self.baseFileName, 1))
-                    print("Renaming " + projectPath + " to "
-                          + updatedProjectPath)
+                    print("Renaming " + projectPath + " to " +
+                          updatedProjectPath)
                     os.rename(projectPath, updatedProjectPath)
 
                     # rename files matching project name
@@ -299,8 +299,8 @@ class ProjectExplorer(QtGui.QWidget):
                                 self.baseFileName, newBaseFileName, 1)
                             newFilePath = os.path.join(
                                 updatedProjectPath, projectFile)
-                            print("Renaming " + oldFilePath + " to"
-                                  + newFilePath)
+                            print("Renaming " + oldFilePath + " to" +
+                                  newFilePath)
                             os.rename(oldFilePath, newFilePath)
                             updatedProjectFiles.append(projectFile)
 
@@ -325,10 +325,9 @@ class ProjectExplorer(QtGui.QWidget):
                     print("==========================")
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
-                        'The project "'
-                        + newBaseFileName
-                        + '" already exist. Please select the different name or'
-                        + ' delete existing project')
+                        'The project "' + newBaseFileName +
+                        '" already exist. Please select the different name' +
+                        ' or delete existing project')
                     msg.setWindowTitle("Error Message")
 
                 elif reply == "CHECKNAME":
@@ -336,6 +335,6 @@ class ProjectExplorer(QtGui.QWidget):
                     print("===========================")
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
-                        'The project name should not '
-                        + 'contain space between them')
+                        'The project name should not ' +
+                        'contain space between them')
                     msg.setWindowTitle("Error Message")

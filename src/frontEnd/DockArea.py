@@ -186,7 +186,7 @@ class DockArea(QtGui.QMainWindow):
         dock['Model Editor-' + str(count)].raise_()
 
         """
-        temp = self.obj_appconfig.current_project['ProjectName']    
+        temp = self.obj_appconfig.current_project['ProjectName']
         self.obj_appconfig.dock_dict[temp].append(
             dock['Model Editor-' + str(count)])
         """
@@ -222,6 +222,7 @@ class DockArea(QtGui.QMainWindow):
         dock['kicadToNgspice-' + str(count)].setVisible(True)
         dock['kicadToNgspice-' + str(count)].setFocus()
         dock['kicadToNgspice-' + str(count)].raise_()
+        # The line of code activate's the textbox for input
         dock['kicadToNgspice-'+str(count)].activateWindow()
         """
         temp = self.obj_appconfig.current_project['ProjectName']

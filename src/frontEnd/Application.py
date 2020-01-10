@@ -110,9 +110,8 @@ class Application(QtGui.QMainWindow):
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
-
         self.topToolbar.addAction(self.closeproj)
-    
+        # calling function to check file is present or notss
         self.check_for_online_offline_files()
         self.topToolbar.addAction(self.webConnect)
         self.webConnect.setShortcut('Ctrl+G')
@@ -329,93 +328,128 @@ class Application(QtGui.QMainWindow):
     """This function is used for checking fp-lib-tables file
      is present.if not than copy from .OfflineFiles folder."""
     def check_for_online_offline_files(self):
+        """
+        First it will check path for kicad folder is present or not. if present
+            1) it will check fp-lib-table file is present or not.
+                - If not present
+                    - Than copy form SourceFile folder
+            2) it will check for both file,
+               i.e online and offline file is present or not.
+                - If both are present
+                    -Than remove offline.
+            3) it will check wich file is present
+                - If fp-lib-table-offline is present
+                    - Than online mode will set and used
+                - If fp-lib-table-online is present
+                    - Than offline mode wiil set and used
+                - If both file are not present
+                    -Than copy fp-lib-table from source file
+        Otherwise the disable icon is set and feature is disabled.
+        """
 
-        if self.obj_appconfig.kicad_path != None:
-            #-----------------------------------------------------
-            #fp-lib-table is not there than copy from .OfflineFolder
+        if self.obj_appconfig.kicad_path is not None:
+
             if not os.path.exists(
-                self.obj_appconfig.kicad_path + "/fp-lib-table"):
-                shutil.copy('../.OfflineFiles/fp-lib-table' ,
+                    self.obj_appconfig.kicad_path + "/fp-lib-table"):
+                shutil.copy(
+                    '../.OfflineFiles/fp-lib-table',
                     self.obj_appconfig.kicad_path + "/")
-            #-----------------------------------------------------
-            """checking online and offline both file's are avaliable.
-            if yes than remove offline file."""
-            if os.path.exists(self.obj_appconfig.kicad_path +
-                     "/fp-lib-table-offline") and os.path.exists(
-                self.obj_appconfig.kicad_path +
-                    "/fp-lib-table-online"):
-                     os.remove(self.obj_appconfig.kicad_path +
-                        "/fp-lib-table-offline")
-            #-----------------------------------------------------
-            #This ladder is used for checking which file is present.
-            if os.path.exists(self.obj_appconfig.kicad_path +
-                     "/fp-lib-table-offline"):
+
+            if os.path.exists(
+                self.obj_appconfig.kicad_path + "/fp-lib-table-offline") and \
+               os.path.exists(
+                 self.obj_appconfig.kicad_path + "/fp-lib-table-online"):
+                os.remove(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table-offline")
+
+            if os.path.exists(
+                 self.obj_appconfig.kicad_path + "/fp-lib-table-offline"):
                 self.webConnect = QtGui.QAction(
-                    QtGui.QIcon('../../images/online.png'),
-                    '<b>Go Offline</b>',self)
+                    QtGui.QIcon(
+                        '../../images/online.png'), '<b>Go Offline</b>', self)
                 self.online_flag = True
 
-            elif os.path.exists(self.obj_appconfig.kicad_path +
-                    "/fp-lib-table-online"):
+            elif os.path.exists(
+                 self.obj_appconfig.kicad_path + "/fp-lib-table-online"):
                 self.webConnect = QtGui.QAction(
-                    QtGui.QIcon('../../images/offline.png'),
-                    '<b>Go Online</b>',self)
+                    QtGui.QIcon(
+                        '../../images/offline.png'), '<b>Go Online</b>', self)
                 self.online_flag = False
             else:
-                #if online and offline is not avaliable
-                shutil.copy('../.OfflineFiles/fp-lib-table-online' ,
-                        self.obj_appconfig.kicad_path + "/")
-                if os.path.exists(self.obj_appconfig.kicad_path +
-                        "/fp-lib-table-online"):
-                    self.webConnect = QtGui.QAction(
-                        QtGui.QIcon('../../images/offline.png'),
-                        '<b>Go Online</b>',self)
-                    self.online_flag = False
-            #----------------------------------------------------
-        else:
-            #if path is not found
-            self.webConnect = QtGui.QAction(QtGui.QIcon(
-                '../../images/disable.png'),
-                    '<b>Clickme</b>',self)
 
-    #This function is used for switching between online mode and offline mode  
+                shutil.copy(
+                    '../.OfflineFiles/fp-lib-table-online',
+                    self.obj_appconfig.kicad_path + "/")
+                if os.path.exists(
+                     self.obj_appconfig.kicad_path + "/fp-lib-table-online"):
+                    self.webConnect = QtGui.QAction(
+                        QtGui.QIcon(
+                         '../../images/offline.png'), '<b>Go Online</b>', self)
+                    self.online_flag = False
+
+        else:
+
+            self.webConnect = QtGui.QAction(QtGui.QIcon(
+                '../../images/disable.png'), '<b>Clickme</b>', self)
+
+    # This function is used for switching between online mode and offline mode
     def go_online_offline(self):
-        if self.obj_appconfig.kicad_path != None:
+        """
+        This function is used for switching between online and offline mode
+        First it will check kicad folder path is present or not.
+            -If present and no KiCad tool (associated with the project) is open
+                -then depending on online_flag, swap fp-lib-table files.
+            -If the KiCad tool (associated with the project) is open than, tell
+            user to close all these tools.
+        And if path is not found, then disable this feature.
+
+        @paramas
+
+        @return
+            None
+        """
+        if self.obj_appconfig.kicad_path is not None:
             try:
                 if not self.obj_kicad.check_open_schematic():
                     if self.online_flag:
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-online")
+                         self.obj_appconfig.kicad_path + "/fp-lib-table",
+                         self.obj_appconfig.kicad_path + "/fp-lib-table-online"
+                         )
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table")
-                        self.webConnect.setIcon(QtGui.QIcon('../../images/offline.png'))
+                         self.obj_appconfig.kicad_path + "/fp-lib-table-\
+                         offline",
+                         self.obj_appconfig.kicad_path + "/fp-lib-table")
+                        self.webConnect.setIcon(QtGui.QIcon(
+                            '../../images/offline.png'))
                         self.webConnect.setText('<b>Go Online</b>')
                         self.online_flag = False
                     else:
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline")
+                         self.obj_appconfig.kicad_path + "/fp-lib-table",
+                         self.obj_appconfig.kicad_path + "/fp-lib-table-\
+                         offline")
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-online",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table")
-                        self.webConnect.setIcon(QtGui.QIcon('../../images/online.png'))
+                         self.obj_appconfig.kicad_path + "/fp-lib-table-\
+                         online",
+                         self.obj_appconfig.kicad_path + "/fp-lib-table")
+                        self.webConnect.setIcon(QtGui.QIcon(
+                            '../../images/online.png'))
                         self.webConnect.setText('<b>Go Offline</b>')
                         self.online_flag = True
                 else:
                     self.msg = QtGui.QErrorMessage()
-                    self.msg.showMessage('Please save and close all the Kicad'
-                        'Windows first, and then change the online-offline mode')
+                    self.msg.showMessage(
+                        'Please save and close all the Kicad Windows first, \
+                         and then change the online-offline mode')
                     self.msg.setWindowTitle("Error Message")
             except:
                 self.check_for_online_offline_files()
         else:
-            self.info_msg = QtGui.QMessageBox.critical(self,
-                            'Message',
-                            "Please make sure kicad_folder_file is " +
-                            "present in .OfflineFiles folder.")
-
+            self.info_msg = QtGui.QMessageBox.critical(
+                self, 'Message',
+                "Please make sure kicad_folder_file is" +
+                " present in .OfflineFiles folder.")
 
     # This Function execute ngspice on current project.
     def open_ngspice(self):

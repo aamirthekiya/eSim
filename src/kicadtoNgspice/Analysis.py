@@ -1,5 +1,4 @@
-
-from PyQt4 import QtGui,QtCore
+from PyQt4 import QtGui, QtCore
 from . import TrackWidget
 import os
 # from xml.etree import ElementTree as ET
@@ -53,10 +52,10 @@ class Analysis(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
-        self.grid.addWidget(self.createCheckBox(),0,0,QtCore.Qt.AlignTop)
-        self.grid.addWidget(self.createACgroup(),1,0,5,0)
-        self.grid.addWidget(self.createDCgroup(),1,0,5,0)
-        self.grid.addWidget(self.createTRANgroup(),1,0,5,0)
+        self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createACgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createDCgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createTRANgroup(), 1, 0, 5, 0)
 
         try:
             kicadFile = self.clarg1
@@ -224,7 +223,7 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
-        self.acbox.setVisible(False)  
+        self.acbox.setVisible(False)
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup = QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")

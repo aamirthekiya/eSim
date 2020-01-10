@@ -55,6 +55,16 @@ class WorkerThread(QtCore.QThread):
         self.wait()
 
     def get_proc_threads(self):
+        """
+        get_proc_threads is return a list of project's, and
+        get_proc_threads() is called when we are checking for
+        project schematic is open or not.
+
+        @params
+
+        @return
+            :self.my_workers
+        """
         return self.my_workers
 
     def run(self):

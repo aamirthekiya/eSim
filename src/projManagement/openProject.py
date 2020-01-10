@@ -67,9 +67,9 @@ class OpenProjectInfo(QtGui.QWidget):
 
         else:
             self.obj_Appconfig.print_error(
-                "The project doesn't contain .proj file. Please select the"
-                + " proper directory else you won't be able to perform any"
-                + " operation")
+                "The project doesn't contain .proj file. Please select the" +
+                " proper directory else you won't be able to perform any" +
+                " operation")
             reply = QtGui.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: The project doesn't contain .proj file.</b><br/>"

@@ -89,12 +89,12 @@ class PrcocessNetlist:
         # Copy information line
         infoline = netlist[0]
         netlist.remove(netlist[0])
-        """print("=============================================================")
+        """print("===========================================================")
         print("preprocessNetList called, from Processing")
         print("=============================================================")
         print("NETLIST", netlist)
         print("INFOLINE", infoline)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return netlist, infoline
 
     def separateNetlistInfo(self, netlist):
@@ -114,12 +114,12 @@ class PrcocessNetlist:
                 optionInfo.append(eachline)
             else:
                 schematicInfo.append(eachline)
-        """print("=============================================================")
+        """print("===========================================================")
         print("separateNetlistInfo called, from Processing")
         print("=============================================================")
         print("OPTIONINFO", optionInfo)
         print("SCHEMATICINFO", schematicInfo)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return optionInfo, schematicInfo
 
     """
@@ -131,9 +131,9 @@ class PrcocessNetlist:
 
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
         schematicInfo1 = []
-        """print("=============================================================")
+        """print("===========================================================")
         print("Reading schematic info for source details")
-        print("=============================================================")"""
+        print("===========================================================")"""
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
@@ -221,10 +221,10 @@ class PrcocessNetlist:
         # print schematicInfo
         """print("=============================================================")
         print("insertSpecialSourceParam called, from Processing")
-        print("=============================================================")
+        print("===========================================================")
         print("SCHEMATICINFO", schematicInfo)
         print("SOURCELIST", sourcelist)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return schematicInfo, sourcelist
 
     def convertICintoBasicBlocks(
@@ -355,8 +355,8 @@ class PrcocessNetlist:
                                 modelLine += compName
 
                             else:
-                                # print("=====================================\
-                                   # ================================")
+                                """ print("=====================================\
+                                    ================================") """
                                 # print("Split Details :", splitDetail)
                                 modelLine = "a" + str(k) + " "
                                 vectorDetail = splitDetail.split(':')
@@ -519,14 +519,14 @@ class PrcocessNetlist:
                 # rint("Model List Details : ", modelList)
         print("=============================================================")
         print("convertICIntoBasicBlocks called, from Processing")
-        print("=============================================================")
+        print("===========================================================")
         print("SCHEMATICINFO", schematicInfo)
         print("OUTPUTOPTION", outputOption)
         print("MODELLIST", modelList)
         print("UNKOWNMODELLIST", unknownModelList)
         print("MULTIPLEMODELLIST", multipleModelList)
         print("PLOTTEST", plotText)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return (
             schematicInfo, outputOption, modelList, unknownModelList,
             multipleModelList, plotText
