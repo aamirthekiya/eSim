@@ -528,10 +528,10 @@ class Application(QtGui.QMainWindow):
 
         else:
             self.msg = QtGui.QErrorMessage(None)
-            self.msg.showMessage('Error while opening nghdl.\
-                Please make sure nghdl is installed')
-            self.obj_appconfig.print_error('Error while opening nghdl.\
-                Please make sure nghdl is installed')
+            self.msg.showMessage('Error while opening nghdl.' +
+                'Please make sure nghdl is installed')
+            self.obj_appconfig.print_error('Error while opening nghdl.' +
+                'Please make sure nghdl is installed')
             self.msg.setWindowTitle('nghdl Error Message')
 
     # This function opens model editor option in left-tool-bar.
@@ -608,15 +608,15 @@ class Application(QtGui.QMainWindow):
             else:
                 self.msg = QtGui.QErrorMessage()
                 self.msg.showMessage(
-                    'Current project does not contain any ngspice file.\
-                        Please create ngspice file with extension .cir.out')
+                    'Current project does not contain any ngspice file.' +
+                        'Please create ngspice file with extension .cir.out')
                 self.msg.setWindowTitle("Missing Ngspice netlist")
         else:
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage(
-                'Please select the project first.\
-                    You can either create new project\
-                        or open existing project')
+                'Please select the project first.' +
+                    'You can either create new project' +
+                        'or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     # sdf
